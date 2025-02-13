@@ -11,15 +11,15 @@
 
 <body class="bg-light-subtle d-flex align-items-center py-4 justify-content-center vh-100">
 
-    <div class="border border-dark-subtle rounded bg-light p-3">
-        <form class = "">
+    <div class="border border-color-custom rounded bg-light p-3">
+        <form class = "" action="function/login.php">
             <div class="mb-3">
-                <h2>Login</h2>
+                <h2 class="font-h2">Login</h2>
             </div>
             <div class="input-group input-group-lg">
                 <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg"  placeholder="Usuário">
             </div>
-            <div class="input-group input-group-lg">
+            <div class="mb-3 input-group input-group-lg">
                 <input type="password" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg"  placeholder="Senha">
             </div>
             <div class="mb-3 form-check">

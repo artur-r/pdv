@@ -2,3 +2,11 @@
     box-shadow: 0 0 3px rgba(28, 202, 255, 0.7) !important;
     border-color: #6be9e0;
 }
+.font-h2 {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.border-color-custom{
+    box-shadow: 0 0 4px rgba(6, 197, 255, 0.7) !important;
+    border-color: #449dad;
+}
+
