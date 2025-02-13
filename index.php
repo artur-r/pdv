@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="custom.css">
 </head>
 
-<body class="bg-light-subtle d-flex align-items-center py-4 justify-content-center vh-100">
+<body class="bg-light-subtle d-flex align-items-center justify-content-center vh-100">
 
     <div class="border border-color-custom rounded bg-light p-3">
 
