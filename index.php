@@ -12,21 +12,24 @@
 <body class="bg-light-subtle d-flex align-items-center py-4 justify-content-center vh-100">
 
     <div class="border border-color-custom rounded bg-light p-3">
-        <form class = "" action="function/login.php">
+
+        <form action="function/login.php" method="post">
+
             <div class="mb-3">
                 <h2 class="font-h2">Login</h2>
             </div>
             <div class="input-group input-group-lg">
-                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg"  placeholder="Usuário">
+                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" placeholder="Usuário" name="login">
             </div>
             <div class="mb-3 input-group input-group-lg">
-                <input type="password" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg"  placeholder="Senha">
+                <input type="password" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" placeholder="Senha" name="senha">
             </div>
             <div class="mb-3 form-check">
                 <input type="checkbox" class="form-check-input" id="exampleCheck1">
                 <label class="form-check-label" for="exampleCheck1">Lembre de mim</label>
             </div>
             <button type="submit" class="btn btn-primary">Entrar</button>
+
         </form>
 
     </div>
