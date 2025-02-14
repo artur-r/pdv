@@ -16,6 +16,7 @@
             Abrir caixa
         </button>
         <a href="produtos.php" class="btn btn-lg btn-info">Produtos</a>
+        <a href="categorias.php" class="btn btn-lg btn-info">Categorias</a>
         <a href="" class="btn btn-lg btn-info">Estoque</a>
         <a href="" class="btn btn-lg btn-info">Relatórios</a>
 

@@ -16,6 +16,7 @@
 
 .box-search{
   display: flex;
+  justify-content: center;
   
   /* dará um espaçamento entre a lupa e o botão */
   gap: 1%; 

@@ -4,19 +4,16 @@ include_once '../function/conexao.php';
 
 if (!empty($_GET['search'])) {
     $search = $_GET['search'];
-    $sql = "SELECT produto.*, categoria.nome AS categoria_nome FROM produto 
-    INNER JOIN categoria ON produto.id_categoria = categoria.id 
-    WHERE produto.id LIKE '%$search%' OR produto.nome LIKE '%$search%' OR categoria.nome LIKE '%$search%'
+    $sql = "SELECT * FROM categoria
+    WHERE id LIKE '%$search%' OR nome LIKE '%$search%'
     ORDER BY id DESC";
 
     $consulta = mysqli_query($conn, $sql);
 }
 
-//isso aqui faz com que se a variável existir vazia, busque tudo. Assim caso ela não exista. Ao abrir a página, não haverá busca
+//isso aqui faz com que se a variável existir ele busque algo. Assim caso ela não exista. Ao abrir a página, não haverá busca
 else if (isset($_GET['search'])) {
-    $sql = "SELECT produto.*, categoria.nome AS categoria_nome
-    FROM produto
-    INNER JOIN categoria ON produto.id_categoria = categoria.id;";
+    $sql = "SELECT * FROM categoria";
     $consulta = mysqli_query($conn, $sql);
 } else {
 }
@@ -58,15 +55,11 @@ else if (isset($_GET['search'])) {
                 </a>
             </div>
             <div class="p-3">
-                <table class="table table-striped -3 table-hover border ">
+                <table class="table table-striped -3 table-hover border  ">
                     <thead class="table table-primary">
                         <tr>
                             <th>Código</th>
-                            <th>Nome</th>
-                            <th>Categoria</th>
-                            <th>Preço custo</th>
-                            <th>Preço venda</th>
-                            <th>Saldo estoque</th>
+                            <th>Nome da categoria</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -75,10 +68,6 @@ else if (isset($_GET['search'])) {
                                 echo "<tr>
                                         <td>" . $result['id'] . "</td>
                                         <td>" . $result['nome'] . "</td>
-                                        <td>" . $result['categoria_nome'] . "</td>
-                                        <td>" . $result['preco_custo'] . "</td>
-                                        <td>" . $result['preco_venda'] . "</td>
-                                        <td>" . $result['saldo_estoque'] . "</td> 
                                      </tr>";
                             }
                         }
@@ -118,11 +107,11 @@ else if (isset($_GET['search'])) {
     });
 
     function searchNull() {
-        window.location = 'produtos.php?search=';
+        window.location = 'categorias.php?search=';
     }
 
     function searchData() {
-        window.location = 'produtos.php?search=' + search.value;
+        window.location = 'categorias.php?search=' + search.value;
     }
 </script>
 
