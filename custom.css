@@ -10,3 +10,13 @@
     border-color: #449dad;
 }
 
+.vh-98{
+    height: 98vh;
+}
+
+.box-search{
+  display: flex;
+  
+  /* dará um espaçamento entre a lupa e o botão */
+  gap: 1%; 
+}

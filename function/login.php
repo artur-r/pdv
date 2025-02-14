@@ -21,6 +21,6 @@ if ($result -> num_rows==1){
     if ($login == $retorno['login']) {
         $_SESSION['login'] = $retorno['login'];
         $_SESSION['nome'] = $retorno['nome'];
-        header("location:../inicio.php");;
+        header("location:../pages/inicio.php");;
     }
 }
