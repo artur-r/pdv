@@ -9,11 +9,23 @@
     <link rel="stylesheet" href="custom.css">
 </head>
 
-<body class="bg-light-subtle d-flex align-items-center justify-content-center vh-100">
+<body>
+
+    <div class="d-flex justify-content w-100 p-2">
+
+        <div class="bg-light w-100 vh-100 border rounded border-opacity-75 border-info">
+            <div class="bg-body-secondary form-control ">
+
+                <a href="" class="btn btn-lg btn-info">Produtos</a>
+                <a href="" class="btn btn-lg btn-info">Estoque</a>
+                <a href="" class="btn btn-lg btn-info">Relatórios</a>
+                <a href="" class="btn btn-lg btn-info">Fechar Caixa</a>
+
+            </div>
+        </div>
 
 
-
-
+    </div>
 
 
 

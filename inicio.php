@@ -11,7 +11,7 @@
 
 <body class="bg-light-subtle d-flex align-items-center justify-content-center vh-100">
 
-    <div class="caixa.php">
+    <div class="">
         <button type="button" class="btn btn-lg btn-info" data-bs-toggle="modal" data-bs-target="#modalAbertura">
             Abrir caixa
         </button>
