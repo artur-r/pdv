@@ -1,3 +1,31 @@
+<?php
+
+include_once '../function/conexao.php';
+
+if (!empty($_GET['search'])) {
+    $search = $_GET['search'];
+    $sql = "SELECT produto.*, categoria.nome AS categoria_nome FROM produto 
+    INNER JOIN categoria ON produto.id_categoria = categoria.id 
+    WHERE produto.id LIKE '%$search%' OR produto.nome LIKE '%$search%' OR categoria.nome LIKE '%$search%'
+    ORDER BY id DESC";
+
+    $consulta = mysqli_query($conn, $sql);
+}
+
+//isso aqui faz com que se a variável existir ele busque algo. Assim caso ela não exista. Ao abrir a página, não haverá busca
+else if(isset($_GET['search'])){
+    $sql = "SELECT produto.*, categoria.nome AS categoria_nome
+    FROM produto
+    INNER JOIN categoria ON produto.id_categoria = categoria.id;";
+    $consulta = mysqli_query($conn, $sql);
+}else{
+
+}
+
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt">
 
@@ -23,6 +51,38 @@
                     Pesquisar
                 </button>
             </div>
+            <div class="p-3">
+                <table class="table table-striped -3 table-hover border ">
+                    <thead class="table table-primary">
+                        <tr>
+                            <th>Código</th>
+                            <th>Nome</th>
+                            <th>Categoria</th>
+                            <th>Preço custo</th>
+                            <th>Preço venda</th>
+                            <th>Saldo estoque</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (!empty($consulta)) {
+                            while ($result = mysqli_fetch_assoc($consulta)) {
+                                echo "<tr>
+                                        <td>" . $result['id'] . "</td>
+                                        <td>" . $result['nome'] . "</td>
+                                        <td>" . $result['categoria_nome'] . "</td>
+                                        <td>" . $result['preco_custo'] . "</td>
+                                        <td>" . $result['preco_venda'] . "</td>
+                                        <td>" . $result['saldo_estoque'] . "</td> 
+                                     </tr>";
+                            }
+                        }
+
+
+
+                        ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
 
@@ -33,12 +93,7 @@
 
 
 
-    <?php
 
-    include_once '../function/conexao.php';
-
-
-    ?>
 
 
 
@@ -47,12 +102,22 @@
 
 </body>
 
-    <script>
-        var search = document.getElementById('pesquisar');
-        function searchData()
-        {
-            window.location='produtos.php?search'+search.value;
+<script>
+    var search = document.getElementById('pesquisar');
+
+    search.addEventListener("keydown", function(event) {
+        if (event.key === "enter") {
+            searchNull();
         }
-    </script>
+    });
+
+    function searchNull() {
+        window.location = 'produtos.php?search=';
+    }
+
+    function searchData() {
+        window.location = 'produtos.php?search=' + search.value;
+    }
+</script>
 
 </html>
