@@ -11,6 +11,19 @@
 
 <body>
 
+
+    <?php
+
+    include_once '../function/conexao.php';
+
+    $sql = "SELECT * FROM categoria";
+    $consulta = mysqli_query($conn, $sql);
+
+
+
+
+    ?>
+
     <div class="w-100 p-2">
 
         <div class="bg-light w-100 vh-98 border rounded border-opacity-75 border-info">
@@ -18,14 +31,24 @@
                 <h2 class="font-h2">Cadastro de produto</h2>
             </div>
             <div class="m-3">
-                <form action="" class="row">
+                <form action="../function/cadastraProduto.php" method="get" class="row">
                     <div class="col-4 mb-4">
                         <label for="nome" class="form-label">Nome</label>
                         <input type="text" name="nome" id="" class="form-control">
                     </div>
                     <div class="col-4 mb-4">
                         <label for="categoria" class="form-label">Categoria</label>
-                        <input type="text" name="categoria" id="" class="form-control">
+                        <select name ="categoria" class="form-select  form-control " aria-label="Default select example">
+                            <option selected disabled>Selecione uma categoria</option>
+
+                            <?php
+                            while ($result = mysqli_fetch_assoc($consulta)) {
+                                $value++;
+                                echo " <option value=" . $result['id'] . ">" . $result['nome'] . "</option>";
+                            }
+                            ?>
+
+                        </select>
                     </div>
                     <div class="col-4 mb-4">
                         <label for="custo" class="form-label">Preço de custo</label>
@@ -37,7 +60,11 @@
                     </div>
                     <div class="col-4 mb-4">
                         <label for="tipo" class="form-label">Tipo venda</label>
-                        <input type="text" name="tipo" id="" class="form-control">
+                        <select name="tipo" class="form-select  form-control " aria-label="Default select example">
+                            <option selected disabled>Selecione o tipo de venda</option>
+                            <option value="1">Unidade</option>
+                            <option value="2">Real</option>
+                        </select>
                     </div>
                     <div class="col-4 mb-4">
                         <label for="estoque" class="form-label">Estoque</label>
@@ -69,13 +96,7 @@
 
 
 
-    <?php
 
-    include_once '../function/conexao.php';
-
-
-
-    ?>
 
 
 
