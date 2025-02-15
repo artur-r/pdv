@@ -17,7 +17,7 @@ else if (isset($_GET['search'])) {
 } else {
 }
 
-
+//atualizar nome
 if (!empty($_GET['id']) && !empty($_GET['nomeNovo'])) {
     $nome = $_GET['nomeNovo'];
     $id = $_GET['id'];
@@ -30,11 +30,26 @@ if (!empty($_GET['id']) && !empty($_GET['nomeNovo'])) {
     $consulta = mysqli_query($conn, $sql);
 }
 
+//deletar categoria
 if (!empty($_GET['deletar'])){
     $id = $_GET['deletar'];
     $sql = "DELETE FROM categoria  WHERE id = $id";
 
     $atualiza = mysqli_query($conn, $sql);
+
+    
+    $sql = "SELECT * FROM categoria
+    ORDER BY id";
+
+    $consulta = mysqli_query($conn, $sql);
+}
+
+//adicionar categoria
+if (!empty($_GET['adicionar'])){
+    $nome = $_GET['adicionar'];
+    $sql = "INSERT INTO categoria (nome) VALUES ('$nome')";
+
+    $cadastra = mysqli_query($conn, $sql);
 
     
     $sql = "SELECT * FROM categoria
@@ -69,7 +84,7 @@ if (!empty($_GET['deletar'])){
                     </svg>
                     Pesquisar
                 </button>
-                <a href="cadastroProduto.php" class="btn btn-success">
+                <a href="cadastroProduto.php" class="btn btn-success" data-bs-target='#modalAdicionar' data-bs-toggle='modal'>
                     Adicionar nova
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
                         <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
@@ -131,7 +146,7 @@ if (!empty($_GET['deletar'])){
                     <div class="modal-body">
                         Insira o novo nome:
                         <div class="input-group">
-                            <input type="text" name="nome" id="inputNome" class="form-control input-group" required>
+                            <input type="text" name="nome" id="inputNomeAtualizar" class="form-control input-group" required>
                         </div>
                     </div>
 
@@ -171,7 +186,34 @@ if (!empty($_GET['deletar'])){
         </div>
     </div> 
 
+    <!-- Modal adicionar-->
+    <div class="modal fade" id="modalAdicionar" tabindex="-1" aria-labelledby="modalAdicionarLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
 
+                <form action="" method="post">
+
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="modalAdicionarLabel">Adicionar Categoria</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        Insira o nome da nova categoria:
+                        <div class="input-group">
+                            <input type="text" name="nome" id="inputNomeAdicionar" class="form-control input-group" required>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" onclick="adicionarCategoria()" class="btn btn-success">Adicionar</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
 
 
 
@@ -208,21 +250,26 @@ if (!empty($_GET['deletar'])){
     document.querySelectorAll('.action-button').forEach(button => {
         button.addEventListener('click', function() {
             var id = this.getAttribute('data-id'); // Captura o ID correto
-            document.getElementById('inputNome').setAttribute('data-id', id); // Armazena o ID no campo de input para atualizar
+            document.getElementById('inputNomeAtualizar').setAttribute('data-id', id); // Armazena o ID no campo de input para atualizar
             document.getElementById('deleteButton').setAttribute('data-id', id); // Armazena o ID no botão de deletar
         });
     });
 
     //Função para atualizar o nome ao clicar no botão
     function atualizarNome() {
-        var id = document.getElementById('inputNome').getAttribute('data-id'); // Recupera o ID salvo
-        var nomeNovo = document.getElementById('inputNome').value;
+        var id = document.getElementById('inputNomeAtualizar').getAttribute('data-id'); // Recupera o ID salvo
+        var nomeNovo = document.getElementById('inputNomeAtualizar').value;
         window.location = 'categorias.php?id=' + id + '&nomeNovo=' + encodeURIComponent(nomeNovo);
     }
 
     function deletarCategoria() {
         var id = document.getElementById('deleteButton').getAttribute('data-id'); // Recupera o ID salvo
         window.location = 'categorias.php?deletar=' + id;
+    }
+
+    function adicionarCategoria() {
+        var nome = document.getElementById('inputNomeAdicionar').value; //Coloca o conteúdo do input dentro da variáel
+        window.location = 'categorias.php?adicionar=' + nome;
     }
 
 </script>
