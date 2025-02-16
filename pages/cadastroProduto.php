@@ -31,15 +31,16 @@
                 <h2 class="font-h2">Cadastro de produto</h2>
             </div>
             <div class="m-3">
-                <form action="../function/cadastraProduto.php" method="get" class="row">
+                <form action="../function/cadastraProduto.php" method="post" class="row">
                     <div class="col-4 mb-4">
                         <label for="nome" class="form-label">Nome</label>
-                        <input type="text" name="nome" id="" class="form-control">
+                        <input type="text" name="nome" id="" class="form-control" required>
+                        
                     </div>
                     <div class="col-4 mb-4">
                         <label for="categoria" class="form-label">Categoria</label>
-                        <select name ="categoria" class="form-select  form-control " aria-label="Default select example">
-                            <option selected disabled>Selecione uma categoria</option>
+                        <select name ="categoria" class="form-select  form-control " aria-label="Default select example" required>
+                            <option></option>
 
                             <?php
                             while ($result = mysqli_fetch_assoc($consulta)) {
@@ -51,24 +52,24 @@
                         </select>
                     </div>
                     <div class="col-4 mb-4">
-                        <label for="custo" class="form-label">Preço de custo</label>
-                        <input type="text" name="custo" id="" class="form-control">
+                        <label for="custo" class="form-label" >Preço de custo</label>
+                        <input type="text" inputmode="decimal" pattern="^\d+([.,]\d{1,2})?$" name="custo" id="" class="form-control" required>
                     </div>
                     <div class="col-4 mb-4">
                         <label for="venda" class="form-label">Preço de venda</label>
-                        <input type="text" name="venda" id="" class="form-control">
+                        <input type="text" inputmode="decimal" pattern="^\d+([.,]\d{1,2})?$" name="venda" id="" class="form-control" required>
                     </div>
                     <div class="col-4 mb-4">
-                        <label for="tipo" class="form-label">Tipo venda</label>
-                        <select name="tipo" class="form-select  form-control " aria-label="Default select example">
-                            <option selected disabled>Selecione o tipo de venda</option>
-                            <option value="1">Unidade</option>
-                            <option value="2">Real</option>
+                        <label for="tipo" class="form-label" >Tipo venda</label>
+                        <select name="tipo" class="form-select  form-control " aria-label="Default select example required">
+                        <option></option>
+                            <option value="unidade">Unidade</option>
+                            <option value="real">Real</option>
                         </select>
                     </div>
                     <div class="col-4 mb-4">
                         <label for="estoque" class="form-label">Estoque</label>
-                        <input type="text" name="estoque" id="" class="form-control">
+                        <input ttype="text" inputmode="decimal" pattern="^\d+([.,]\d{1,2})?$" name="estoque" id="" class="form-control">
                     </div>
                     <div class="col-4 mb-4">
                         <label for="cod" class="form-label">Cód. De barra</label>
@@ -102,6 +103,10 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <script>
+        
+    </script>
 
 </body>
 

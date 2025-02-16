@@ -96,7 +96,7 @@ if (!empty($_GET['adicionar'])){
                 <table class="table table-responsive table-striped  table-hover border w-100 ">
                     <thead class="table-primary">
                         <tr>
-                            <th class="col">Código</th>
+                            <th class="col">Número</th>
                             <th class="col">Nome da categoria</th>
                             <th class="col-1 text-center">Ações</th>
                         </tr>

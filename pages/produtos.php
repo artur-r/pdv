@@ -40,7 +40,7 @@ else if (isset($_GET['search'])) {
 
     <div class="d-flex justify-content w-100 p-2">
 
-        <div class="bg-light w-100 vh-98 border rounded border-opacity-75 border-info">
+        <div class="bg-light w-100  border rounded border-opacity-75 border-info">
             <div class="bg-body-secondary form-control box-search ">
                 <input type="search" class="form-control w-50" placeholder="Pesquisar" id="pesquisar">
                 <button onclick="searchData()" class="btn btn-primary">
@@ -61,7 +61,7 @@ else if (isset($_GET['search'])) {
                 <table class="table table-striped -3 table-hover border ">
                     <thead class="table table-primary">
                         <tr>
-                            <th>Código</th>
+                            <th>Número</th>
                             <th>Nome</th>
                             <th>Categoria</th>
                             <th>Preço custo</th>
