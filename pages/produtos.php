@@ -16,7 +16,8 @@ if (!empty($_GET['search'])) {
 else if (isset($_GET['search'])) {
     $sql = "SELECT produto.*, categoria.nome AS categoria_nome
     FROM produto
-    INNER JOIN categoria ON produto.id_categoria = categoria.id;";
+    INNER JOIN categoria ON produto.id_categoria = categoria.id
+    ORDER BY id";
     $consulta = mysqli_query($conn, $sql);
 } else {
 }

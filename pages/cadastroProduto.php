@@ -20,8 +20,6 @@
     $consulta = mysqli_query($conn, $sql);
 
 
-
-
     ?>
 
     <div class="w-100 p-2">
@@ -31,16 +29,18 @@
                 <h2 class="font-h2">Cadastro de produto</h2>
             </div>
             <div class="m-3">
-                <form action="../function/cadastraProduto.php" method="post" class="row">
+                <form action="../function/cadastraProduto.php" method="post" class="row needs-validation" novalidate>
                     <div class="col-4 mb-4">
-                        <label for="nome" class="form-label">Nome</label>
+                        <label for="nome" class="form-label" id="validationCustom03">Nome</label>
                         <input type="text" name="nome" id="" class="form-control" required>
-                        
+                        <div class="invalid-feedback">
+                            Favor inserir o nome do produto
+                        </div>
                     </div>
                     <div class="col-4 mb-4">
                         <label for="categoria" class="form-label">Categoria</label>
-                        <select name ="categoria" class="form-select  form-control " aria-label="Default select example" required>
-                            <option></option>
+                        <select name="categoria" class="form-select  form-control " aria-label="Default select example" required>
+                            <option selected disabled value="">Selecione...</option>
 
                             <?php
                             while ($result = mysqli_fetch_assoc($consulta)) {
@@ -50,22 +50,34 @@
                             ?>
 
                         </select>
+                        <div class="invalid-feedback">
+                            Selecione uma categoria válida
+                        </div>
                     </div>
                     <div class="col-4 mb-4">
-                        <label for="custo" class="form-label" >Preço de custo</label>
-                        <input type="text" inputmode="decimal" pattern="^\d+([.,]\d{1,2})?$" name="custo" id="" class="form-control" required>
+                        <label for="custo" class="form-label">Preço de custo</label>
+                        <input type="text" inputmode="decimal" pattern="^\d+([.,]\d{1,2})?$" name="custo" id="validationCustom03" class="form-control" required>
+                        <div class="invalid-feedback">
+                            Insira um valor válido
+                        </div>
                     </div>
                     <div class="col-4 mb-4">
                         <label for="venda" class="form-label">Preço de venda</label>
                         <input type="text" inputmode="decimal" pattern="^\d+([.,]\d{1,2})?$" name="venda" id="" class="form-control" required>
+                        <div class="invalid-feedback">
+                            Insira um valor válido
+                        </div>
                     </div>
                     <div class="col-4 mb-4">
-                        <label for="tipo" class="form-label" >Tipo venda</label>
-                        <select name="tipo" class="form-select  form-control " aria-label="Default select example required">
-                        <option></option>
+                        <label for="tipo" class="form-label">Tipo venda</label>
+                        <select name="tipo" class="form-select  form-control " aria-label="Default select example" required>
+                            <option selected disabled value="">Selecione...</option>
                             <option value="unidade">Unidade</option>
                             <option value="real">Real</option>
                         </select>
+                        <div class="invalid-feedback">
+                            Selecione um tipo
+                        </div>
                     </div>
                     <div class="col-4 mb-4">
                         <label for="estoque" class="form-label">Estoque</label>
@@ -105,7 +117,24 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <script>
-        
+        (() => {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            const forms = document.querySelectorAll('.needs-validation')
+
+            // Loop over them and prevent submission
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
     </script>
 
 </body>
