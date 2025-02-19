@@ -7,7 +7,7 @@ if (!empty($_GET['search'])) {
     $sql = "SELECT produto.*, categoria.nome AS categoria_nome FROM produto 
     INNER JOIN categoria ON produto.id_categoria = categoria.id 
     WHERE produto.id LIKE '%$search%' OR produto.nome LIKE '%$search%' OR categoria.nome LIKE '%$search%'
-    ORDER BY id DESC";
+    ORDER BY id";
 
     $consulta = mysqli_query($conn, $sql);
 }
@@ -22,7 +22,19 @@ else if (isset($_GET['search'])) {
 } else {
 }
 
+if (!empty($_GET['deletar'])) {
+    $id = $_GET['deletar'];
+    $sql = "DELETE FROM produto
+    WHERE id = $id";
+    $deletar = mysqli_query($conn, $sql);
 
+
+    $sql = "SELECT produto.*, categoria.nome AS categoria_nome
+    FROM produto
+    INNER JOIN categoria ON produto.id_categoria = categoria.id
+    ORDER BY id";
+    $consulta = mysqli_query($conn, $sql);
+}
 
 ?>
 
@@ -68,6 +80,7 @@ else if (isset($_GET['search'])) {
                             <th>Preço custo</th>
                             <th>Preço venda</th>
                             <th>Saldo estoque</th>
+                            <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -80,6 +93,16 @@ else if (isset($_GET['search'])) {
                                         <td>" . $result['preco_custo'] . "</td>
                                         <td>" . $result['preco_venda'] . "</td>
                                         <td>" . $result['saldo_estoque'] . "</td> 
+                                        <td class='text-center'>
+                                            <a class='btn btn-primary action-button' data-id='" . $result['id'] . "' href='atualizarProduto.php'>
+                                                <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-pencil' viewBox='0 0 16 16'>
+                                                <path d='M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325'/></svg>
+                                            </a> 
+                                            <button class='btn btn-danger action-button' data-bs-target='#modalDeletar' data-bs-toggle='modal'data-id='" . $result['id'] . "'>
+                                                <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-trash3' viewBox='0 0 16 16'>
+                                                <path d='M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5'/></svg>
+                                             </button> 
+                                        </td>
                                      </tr>";
                             }
                         }
@@ -96,7 +119,30 @@ else if (isset($_GET['search'])) {
     </div>
 
 
+    <div class="modal fade" id="modalDeletar" tabindex="-1" aria-labelledby="modalDeletarLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
 
+                <form action="" method="post">
+
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="modalDeletarLabel">Deletar categoria</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        Confirme se deseja deletar o produto
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" id="deleteButton" onclick="deletarProduto()" class="btn btn-warning">Deletar</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
 
 
 
@@ -125,6 +171,22 @@ else if (isset($_GET['search'])) {
     function searchData() {
         window.location = 'produtos.php?search=' + search.value;
     }
+
+    //Evento de clique que armazena o id dentro do input (para o conteúdo ir para a URL, deve estar dentro do input)
+    document.querySelectorAll('.action-button').forEach(button => {
+        button.addEventListener('click', function() {
+            var id = this.getAttribute('data-id'); // Captura o ID correto
+            document.getElementById('deleteButton').setAttribute('data-id', id); // Armazena o ID no botão de deletar
+        });
+    });
+
+
+    function deletarProduto() {
+        var id = document.getElementById('deleteButton').getAttribute('data-id'); // Recupera o ID salvo
+        window.location = 'produtos.php?deletar=' + id;
+    }
+
+    
 </script>
 
 </html>
