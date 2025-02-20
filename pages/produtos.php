@@ -2,10 +2,14 @@
 
 include_once '../function/conexao.php';
 
+//Busca no botão de buscar de acordo com o dado do input
 if (!empty($_GET['search'])) {
     $search = $_GET['search'];
-    $sql = "SELECT produto.*, categoria.nome AS categoria_nome FROM produto 
+    $sql = "SELECT produto.*, categoria.nome AS categoria_nome,
+    tipo_venda.nome AS tipo_venda_nome
+    FROM produto 
     INNER JOIN categoria ON produto.id_categoria = categoria.id 
+    INNER JOIN tipo_venda ON produto.tipo_venda = tipo_venda.id
     WHERE produto.id LIKE '%$search%' OR produto.nome LIKE '%$search%' OR categoria.nome LIKE '%$search%'
     ORDER BY id";
 
@@ -14,9 +18,11 @@ if (!empty($_GET['search'])) {
 
 //isso aqui faz com que se a variável existir vazia, busque tudo. Assim caso ela não exista. Ao abrir a página, não haverá busca
 else if (isset($_GET['search'])) {
-    $sql = "SELECT produto.*, categoria.nome AS categoria_nome
+    $sql = "SELECT produto.*, categoria.nome AS categoria_nome,
+    tipo_venda.nome AS tipo_venda_nome
     FROM produto
     INNER JOIN categoria ON produto.id_categoria = categoria.id
+    INNER JOIN tipo_venda ON produto.id_tipo_venda = tipo_venda.id
     ORDER BY id";
     $consulta = mysqli_query($conn, $sql);
 } else {
@@ -29,10 +35,12 @@ if (!empty($_GET['deletar'])) {
     $deletar = mysqli_query($conn, $sql);
 
 
-    $sql = "SELECT produto.*, categoria.nome AS categoria_nome
+    $sql = "SELECT produto.*, categoria.nome AS categoria_nome,
+    tipo_venda.nome AS tipo_venda_nome
     FROM produto
     INNER JOIN categoria ON produto.id_categoria = categoria.id
-    ORDER BY id";
+    INNER JOIN tipo_venda ON produto.id_tipo_venda = tipo_venda.id
+    ORDER BY produto.id";
     $consulta = mysqli_query($conn, $sql);
 }
 
@@ -80,6 +88,7 @@ if (!empty($_GET['deletar'])) {
                             <th>Preço custo</th>
                             <th>Preço venda</th>
                             <th>Saldo estoque</th>
+                            <th>Tipo de venda</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
@@ -93,8 +102,9 @@ if (!empty($_GET['deletar'])) {
                                         <td>" . $result['preco_custo'] . "</td>
                                         <td>" . $result['preco_venda'] . "</td>
                                         <td>" . $result['saldo_estoque'] . "</td> 
+                                        <td>" . $result['tipo_venda_nome']."</td>
                                         <td class='text-center'>
-                                            <a class='btn btn-primary action-button' data-id='" . $result['id'] . "' href='cadastroProduto.php?id=" . $result['id'] . "&nome=" . $result['nome'] . " &cod_categoria=" . $result['id_categoria'] . "&custo=" . $result['preco_custo'] . "&venda=" . $result['preco_venda'] . "&estoque=" . $result['saldo_estoque'] . "&codBarra=" . $result['codigo_de_barra'] . "&tipo=" . $result['unidade_de_medida'] . "&categoria=" . $result['categoria_nome'] . "'>
+                                            <a class='btn btn-primary action-button' data-id='" . $result['id'] . "' href='cadastroProduto.php?id=" . $result['id'] . "&nome=" . $result['nome'] . " &cod_categoria=" . $result['id_categoria'] . "&custo=" . $result['preco_custo'] . "&venda=" . $result['preco_venda'] . "&estoque=" . $result['saldo_estoque'] . "&codBarra=" . $result['codigo_de_barra'] . "&tipo=" . $result['tipo_venda_nome'] . "&categoria=" . $result['categoria_nome'] . "&id_tipo=" . $result['id_tipo_venda'] . "'>
                                                 <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-pencil' viewBox='0 0 16 16'>
                                                 <path d='M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325'/></svg>
                                             </a> 

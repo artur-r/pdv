@@ -35,7 +35,7 @@ if (!empty($_GET['deletar'])){
     $id = $_GET['deletar'];
     $sql = "DELETE FROM categoria  WHERE id = $id";
 
-    $atualiza = mysqli_query($conn, $sql);
+    $deleta = mysqli_query($conn, $sql);
 
     
     $sql = "SELECT * FROM categoria
