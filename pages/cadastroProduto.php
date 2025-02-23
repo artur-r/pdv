@@ -175,7 +175,7 @@
         (() => {
             'use strict'
 
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            // aplicar validação de formulário bootstrap
             const forms = document.querySelectorAll('.needs-validation')
 
             // Loop over them and prevent submission

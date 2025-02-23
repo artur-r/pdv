@@ -5,7 +5,7 @@ include_once '../function/conexao.php';
 if (!empty($_GET['search'])) {
     $search = $_GET['search'];
     $sql = "SELECT *FROM cliente * 
-    WHERE produto.id LIKE '%$search%' OR produto.nome LIKE '%$search%' OR categoria.nome LIKE '%$search%'
+    WHERE id LIKE '%$search%' OR nome LIKE '%$search%' OR cpf LIKE '%$search%' OR bairro LIKE '%$search%' OR cidade LIKE '%$search%' OR estado LIKE '%$search%' OR contato LIKE '%$search%'
     ORDER BY id";
 
     $consulta = mysqli_query($conn, $sql);
@@ -47,7 +47,7 @@ else if (isset($_GET['search'])) {
                     </svg>
                     Pesquisar
                 </button>
-                <a href="cadastroProduto.php" class="btn btn-success">
+                <a href="cadastroCliente.php" class="btn btn-success">
                     Adicionar novo
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
                         <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
