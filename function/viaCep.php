@@ -5,6 +5,7 @@ $endereco = (object)[
     'logradouro' => '',
     'bairro' => '',
     'uf' => '',
+    'localidade' => '',
 ];
 
 

@@ -27,18 +27,6 @@
                 <h2 class="font-h2">Cadastro de cliente</h2>
             </div>
             
-            <!-- <form action="cadastroCliente.php" method="post">
-            <label for="cep">Cep</label>
-            <input type="text" name="cep">
-            <input type="submit">
-            
-
-
-            <label for="rua">Rua</label>
-            <input type="text" value="<?php echo $endereco->logradouro ?>">
-           
-
-            </form>  -->
 
             <div class="m-3">
 
@@ -46,7 +34,7 @@
                 <?php if (empty($_GET)) {
                     echo " <form action='' method='post' class='row needs-validation' novalidate>";
                 } else {
-                    echo " <form action='../function/AtualizaCliente.php?id=".$id."' method='post' class='row needs-validation' novalidate>";
+                    echo " <form action='../function/atualizaCliente.php?id=".$id."' method='post' class='row needs-validation' novalidate>";
                 }
                 ?>
                 <form action="../function/cadastraProduto.php" method="post" class="row needs-validation" novalidate>
@@ -72,11 +60,11 @@
                     </div> -->
                     <div class="col-4 mb-4">
                         <label for="endereco" class="form-label" id="validationCustom03">Endereço</label>
-                        <input type="text" name="endereco" id="" class="form-control" value="<?php echo "$endereco->logradouro";?>">
+                        <input type="text" name="endereco" id="endereco" class="form-control" value="">
                     </div>
                     <div class="col-4 mb-4">
                         <label for="bairro" class="form-label" id="">Bairro</label>
-                        <input type="text" name="bairro" id="" class="form-control"  value="<?php echo "$endereco->bairro";?>">
+                        <input type="text" name="bairro" id="bairro" class="form-control"  value="">
                     </div>
                     <div class="col-4 mb-4">
                         <label for="contato" class="form-label" id="">Contato</label>
@@ -84,12 +72,12 @@
                     </div>
                     <div class="col-4 mb-4">
                         <label for="cep" class="form-label">CEP</label>
-                        <input type="text" inputmode="decimal" pattern="^\d+([.,]\d{1,2})?$" name="cep" id="" class="form-control" value="">
-                        <input type="submit" value="Consultar">
+                        <input type="text" inputmode="decimal" pattern="^\d+([.,]\d{1,2})?$" name="cep" id="cep" class="form-control" value="">
+                        <button class='btn btn-primary' onclick="consultarCep()"></button>
                     </div>
                     <div class="col-4 mb-4">
                         <label for="cidade" class="form-label" id="">Cidade</label>
-                        <input type="text" name="cidade" id="" class="form-control" value="<?php echo "$endereco->localidade";?>">
+                        <input type="text" name="cidade" id="cidade" class="form-control" value="">
                     </div>
                     <div class="col-4 mb-4">
                         <label for="NumeroEndereco" class="form-label">Número do endereço</label>
@@ -175,6 +163,38 @@
                 }, false)
             })
         })()
+
+
+
+
+       async function consultarCep() {
+
+        event.preventDefault()
+            let cep = document.querySelector('#cep').value;
+            const url = `https://viacep.com.br/ws/${cep}/json/`
+            
+
+           try {
+            let resp = await fetch(url)
+            if (resp.status===200){
+                const endereco = await resp.json();
+                document.querySelector('#bairro').value = endereco.bairro
+                document.querySelector('#endereco').value = endereco.logradouro
+                document.querySelector('#cidade').value = endereco.localidade
+            }
+
+            
+           } catch (error) {
+            window.alert(`erro:${error}`)
+           } 
+
+           
+
+
+
+
+        }
+
     </script>
 
 </body>
