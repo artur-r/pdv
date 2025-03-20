@@ -241,7 +241,7 @@
 
 
             } catch (error) {
-                window.alert(`erro:${error}`)
+                window.alert(`erro: Verifique se o CEP foi inserido corretamente ou se o CEP é válido`)
             }
 
 
