@@ -26,7 +26,7 @@
             <div class="bg-body-secondary form-control mb-3">
                 <h2 class="font-h2">Cadastro de cliente</h2>
             </div>
-            
+
 
             <div class="m-3">
 
@@ -34,13 +34,13 @@
                 <?php if (empty($_GET)) {
                     echo " <form action='' method='post' class='row needs-validation' novalidate>";
                 } else {
-                    echo " <form action='../function/atualizaCliente.php?id=".$id."' method='post' class='row needs-validation' novalidate>";
+                    echo " <form action='../function/atualizaCliente.php?id=" . $id . "' method='post' class='row needs-validation' novalidate>";
                 }
                 ?>
                 <form action="../function/cadastraProduto.php" method="post" class="row needs-validation" novalidate>
                     <div class="col-4 mb-4">
                         <label for="nome" class="form-label" id="validationCustom03">Nome</label>
-                        <input type="text" name="nome" id="" class="form-control"  value="">
+                        <input type="text" name="nome" id="" class="form-control" value="">
                         <!-- <div class="invalid-feedback">
                             Insira o nome do cliente
                         </div> -->
@@ -64,7 +64,7 @@
                     </div>
                     <div class="col-4 mb-4">
                         <label for="bairro" class="form-label" id="">Bairro</label>
-                        <input type="text" name="bairro" id="bairro" class="form-control"  value="">
+                        <input type="text" name="bairro" id="bairro" class="form-control" value="">
                     </div>
                     <div class="col-4 mb-4">
                         <label for="contato" class="form-label" id="">Contato</label>
@@ -73,15 +73,33 @@
                     <div class="col-4 mb-4">
                         <label for="cep" class="form-label">CEP</label>
                         <input type="text" inputmode="decimal" pattern="^\d+([.,]\d{1,2})?$" name="cep" id="cep" class="form-control" value="">
-                        <button class='btn btn-primary' onclick="consultarCep()"></button>
+                        <button class='btn btn-primary' onclick="consultarCep()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                            </svg></button>
                     </div>
                     <div class="col-4 mb-4">
-                        <label for="cidade" class="form-label" id="">Cidade</label>
-                        <input type="text" name="cidade" id="cidade" class="form-control" value="">
+                        <label for="estado" class="form-label">Estado</label>
+                        <select name="estado" id="uf" class="form-select  form-control " aria-label="Default select example" required>
+                            <option selected value="">
+                        </select>
+                        <div class="invalid-feedback">
+                            Selecione uma estado válida
+                        </div>
                     </div>
+
+                    <div class="col-4 mb-4">
+                        <label for="cidade" class="form-label">Cidade</label>
+                        <select name="cidade" id='cidade' class="form-select  form-control " aria-label="Default select example" required>
+                            <option selected value="">
+                        </select>
+                        <div class="invalid-feedback">
+                            Selecione uma cidade válida
+                        </div>
+                    </div>
+
                     <div class="col-4 mb-4">
                         <label for="NumeroEndereco" class="form-label">Número do endereço</label>
-                        <input type="text" inputmode="decimal" pattern="^\d+([.,]\d{1,2})?$" name="NumeroEndereco" id="" class="form-control"  value="">
+                        <input type="text" inputmode="decimal" pattern="^\d+([.,]\d{1,2})?$" name="NumeroEndereco" id="" class="form-control" value="">
                     </div>
                     <!-- <div class="col-4 mb-4">
                         <label for="tipo" class="form-label">Tipo venda</label>
@@ -89,8 +107,8 @@
                             <option selected value="<?php if (!empty($_GET)) {
                                                         echo $idTipoVenda;
                                                     } ?>"><?php if (!empty($_GET)) {
-                                                                                                            echo $tipoVenda;
-                                                                                                        } ?></option>
+                                                                echo $tipoVenda;
+                                                            } ?></option>
                             <option value="1">UNITÁRIA</option>
                             <option value="2">FRACIONADA</option>
                         </select>
@@ -126,8 +144,8 @@
                     </div>
                 </form>
             </div>
-            </div>
         </div>
+    </div>
 
 
     </div>
@@ -166,35 +184,68 @@
 
 
 
+        //API ESTADO E CIDADE
+        const urlUF = 'https://servicodados.ibge.gov.br/api/v1/localidades/estados'
+        const uf = document.getElementById("uf")
+        const cidade = document.getElementById("cidade")
 
-       async function consultarCep() {
 
-        event.preventDefault()
+        uf.addEventListener('change', async function() {
+            const urlCidades = 'https://servicodados.ibge.gov.br/api/v1/localidades/estados/' + uf.value + '/municipios'
+            const request = await fetch(urlCidades)
+            const response = await request.json()
+
+            let options = ''
+            response.forEach(function(cidades) {
+                options += '<option>' + cidades.nome + '</option>'
+            })
+            cidade.innerHTML = options
+        })
+
+
+
+        window.addEventListener('load', async () => {
+            const request = await fetch(urlUF) //Recebe resultado da url
+            const response = await request.json() //converte o resultado para json
+
+            // console.log(response[0].sigla)
+            const options = document.createElement("optgroup")
+            options.setAttribute("label", 'UFs')
+            response.forEach(function(uf) {
+                options.innerHTML += '<option>' + uf.sigla + '</option>'
+            })
+
+            uf.append(options)
+
+        })
+
+
+
+        //API CEP
+        async function consultarCep() {
+
+            event.preventDefault()
             let cep = document.querySelector('#cep').value;
             const url = `https://viacep.com.br/ws/${cep}/json/`
-            
 
-           try {
-            let resp = await fetch(url)
-            if (resp.status===200){
-                const endereco = await resp.json();
-                document.querySelector('#bairro').value = endereco.bairro
-                document.querySelector('#endereco').value = endereco.logradouro
-                document.querySelector('#cidade').value = endereco.localidade
+
+            try {
+                let resp = await fetch(url)
+                if (resp.status === 200) {
+                    const endereco = await resp.json();
+                    document.getElementById('bairro').value = endereco.bairro
+                    document.getElementById('endereco').value = endereco.logradouro
+                    document.getElementById('cidade').innerHTML = '<option>' + endereco.localidade + '</option>'
+                    document.getElementById('uf').value = endereco.uf
+                }
+
+
+            } catch (error) {
+                window.alert(`erro:${error}`)
             }
-
-            
-           } catch (error) {
-            window.alert(`erro:${error}`)
-           } 
-
-           
-
-
 
 
         }
-
     </script>
 
 </body>
