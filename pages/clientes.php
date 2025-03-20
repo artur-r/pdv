@@ -59,11 +59,12 @@ else if (isset($_GET['search'])) {
                 <table class="table table-striped -3 table-hover border ">
                     <thead class="table table-primary">
                         <tr>
-                            <th>Número</th>
+                            <th>Cód.</th>
                             <th>Nome</th>
                             <th>cpf</th>
+                            <th>CEP</th>
                             <th>endereço</th>
-                            <th>cep</th>
+                            <th>número</th>
                             <th>bairro</th>
                             <th>cidade</th>
                             <th>estado</th>
@@ -79,6 +80,7 @@ else if (isset($_GET['search'])) {
                                         <td>" . $result['cpf'] . "</td>
                                         <td>" . $result['cep'] . "</td>
                                         <td>" . $result['endereco'] . "</td>
+                                        <td>" . $result['numero'] . "</td>
                                         <td>" . $result['bairro'] . "</td> 
                                         <td>" . $result['cidade'] . "</td> 
                                         <td>" . $result['estado'] . "</td> 

@@ -32,7 +32,7 @@
 
                 <!-- Caso seja atualização será criado um formulário para atualizar. E se for cadastro será para cadastrar -->
                 <?php if (empty($_GET)) {
-                    echo " <form action='' method='post' class='row needs-validation' novalidate>";
+                    echo " <form action='../function/cadastraCliente.php' method='post' class='row needs-validation' novalidate>";
                 } else {
                     echo " <form action='../function/atualizaCliente.php?id=" . $id . "' method='post' class='row needs-validation' novalidate>";
                 }
@@ -98,8 +98,8 @@
                     </div>
 
                     <div class="col-4 mb-4">
-                        <label for="NumeroEndereco" class="form-label">Número do endereço</label>
-                        <input type="text" inputmode="decimal" pattern="^\d+([.,]\d{1,2})?$" name="NumeroEndereco" id="" class="form-control" value="">
+                        <label for="numero" class="form-label">Número do endereço</label>
+                        <input type="text" inputmode="decimal" pattern="^\d+([.,]\d{1,2})?$" name="numero" id="" class="form-control" value="">
                     </div>
                     <!-- <div class="col-4 mb-4">
                         <label for="tipo" class="form-label">Tipo venda</label>
@@ -192,8 +192,8 @@
 
         uf.addEventListener('change', async function() {
             const urlCidades = 'https://servicodados.ibge.gov.br/api/v1/localidades/estados/' + uf.value + '/municipios'
-            const request = await fetch(urlCidades)
-            const response = await request.json()
+            const request = await fetch(urlCidades) //Recebe resultado da url
+            const response = await request.json() //converte o resultado para json
 
             let options = ''
             response.forEach(function(cidades) {
