@@ -15,3 +15,5 @@ $sql = "INSERT INTO cliente (nome,cpf,cep,endereco,numero,bairro,cidade,estado,c
         VALUES ('$nome','$cpf','$cep','$endereco','$numero','$bairro','$cidade','$estado','$contato')";
 
 $cadastro = mysqli_query($conn,$sql);
+
+header("location:../pages/clientes.php?search=");
