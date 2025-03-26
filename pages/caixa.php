@@ -1,3 +1,22 @@
+<?php 
+
+include_once '../function/conexao.php';
+
+date_default_timezone_set('America/Sao_Paulo');
+
+$saldoInicial = $_POST["saldoInicial"];
+$dataAbertura =  date('Y-m-d H:i:s'); //forma que fica no mysql
+$dataAberturaConvertida = date('d/m/Y H:i:s', );//convertida para melhor visualização
+
+$sql = "INSERT INTO registro (saldo_inicial,data_abertura) 
+        VALUES ('$saldoInicial','$dataAbertura')";
+
+$insert = mysqli_query($conn,$sql)        
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="pt">
 
@@ -24,6 +43,10 @@
             </div>
         </div>
 
+
+    </div>
+
+    <div class="form-control">
 
     </div>
 
